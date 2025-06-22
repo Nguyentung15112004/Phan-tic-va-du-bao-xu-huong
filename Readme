@@ -93,7 +93,14 @@ Nút hành động:
 ▸ Dự đoán top 3 chủ đề hot nhất — khi bấm sẽ chạy mô hình và cập nhật kết quả phía trên.
 _____________________________________________________________________________________________________________________________________________________
 # Cấu trúc file
-
+du_doan_chu_de_hot/
+├── app.py # Giao diện 
+├── requirements.txt # Khai báo thư viện
+├── Kmeans+tf-idf.ipynb # Phân cụm chủ đề
+├── DLinear.ipynb # Mô hình DLinear
+├── n-beats.ipynb # Mô hình N-BEATS
+├── data/ # Dữ liệu
+└── README.md # Tài liệu mô tả
 
 
 ___________________________________________________________________________________________________________________________________________________
