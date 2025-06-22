@@ -1,132 +1,92 @@
 
-# Chủ đề btl: Phân tích và dự báo các chủ đề trên mạng xã hôi/ tin tức
+# 📌 Chủ đề BTL: Phân tích và dự báo các chủ đề trên mạng xã hội / tin tức
 
-# Mô tả bài toán:
+## 📝 Mô tả bài toán
 
-Trong thời đại công nghệ số và chuyển đổi số phức tạp như ngày nay, việc làm chủ được các phương pháp phân tích cũng như dự báo các chủ để trên mạng xã hội va tin tức 
-là 1 điều rất quan trọng bởi với việc phát hiện những topic, chủ dể hot trong 1 khoảng thời gian sớm giúp chúng ta có thể chủ động phòng ngừa và đưa ra những giải pháp
-cho các chủ để nóng đó
-Bài toán được xây dựng với 2 phương pháp chính là phân tích xu hướng(TF-IDF +Kmeans) và dự báo xu hướng(N-east và Dlinear)
-__________________________________________________________________________________________________________________________________________________________________
+Trong thời đại công nghệ số, việc phân tích và dự báo các chủ đề nóng trên mạng xã hội, tin tức là vô cùng quan trọng. Việc phát hiện sớm các topic hot giúp chủ động phòng ngừa và đưa ra giải pháp cho các vấn đề xã hội.
 
-# Bộ dữ liệu được sử dụng bài
+Bài toán này được triển khai với 2 bước chính:
+- **Phân tích xu hướng**: sử dụng TF-IDF + KMeans để gán nhãn chủ đề.
+- **Dự báo xu hướng**: sử dụng mô hình DLinear và N-BEATS để dự báo mức độ lan truyền theo thời gian.
 
-Bộ dữ liệu được lấy từ dự án GKG (Global Knowledge Graph), Link dự liệu đã được trích và đẩy lên Kaggle: https://www.kaggle.com/datasets/nguynlmtng/topic-news
-Bộ dữ liệu gôm 11 thuộc tính bao gồm: DATE,NUMARTS,COUNTS,THEMES,LOCATIONS,PERSONS,ORGANIZATIONS,TONE,CAMEOEVENTIDS,SOURCEURLS,
+---
 
+## 📂 Bộ dữ liệu sử dụng
 
-_______________________________________________________________________________________________________________________________________________________
+Dữ liệu từ dự án GKG (Global Knowledge Graph):  
+📦 [Link trên Kaggle](https://www.kaggle.com/datasets/nguynlmtng/topic-news)
 
-# Các Mô hình và phương pháp được triển khai cho bài toán
+Gồm 11 thuộc tính chính:  
+`DATE`, `NUMARTS`, `COUNTS`, `THEMES`, `LOCATIONS`, `PERSONS`, `ORGANIZATIONS`, `TONE`, `CAMEOEVENTIDS`, `SOURCEURLS`, `source`.
 
-# 1.Phân tích xu hướng (TF-iDF+Kmeans)
+---
 
-## 1.1 TF-IDF
+## 🔍 Các mô hình và phương pháp
 
- TF-IDF (Term Frequency - Inverse Document Frequency)
-📊 Biến văn bản thành vector số theo tần suất xuất hiện từ ngữ.
+### 1. Phân tích chủ đề (TF-IDF + KMeans)
 
-🧠 Giảm ảnh hưởng từ phổ biến, làm nổi bật các từ khóa đặc trưng trong từng văn bản.
+#### 📊 TF-IDF
+- Vector hóa văn bản theo mức độ quan trọng của từ.
+- Làm nổi bật các từ khóa đặc trưng, dùng làm đầu vào cho KMeans.
 
-💡 Phù hợp cho các bài toán phân cụm hoặc phân loại văn bản.
+#### 📎 KMeans
+- Phân nhóm văn bản thành các cụm chủ đề.
+- Dễ triển khai, chạy nhanh, dễ gán nhãn bằng các từ khóa tiêu biểu.
 
-⚙️ Đầu ra là ma trận thưa (sparse matrix), dùng làm đầu vào cho các mô hình học máy.
+---
 
-## 1.2 Kmeans
+### 2. Dự báo xu hướng chủ đề
 
- KMeans Clustering
-📎 Nhóm các văn bản lại thành các cụm chủ đề dựa trên đặc trưng TF-IDF.
+#### ⚡ DLinear
+- Dự báo tuyến tính từng thành phần chuỗi (trend, seasonality).
+- Rất nhanh, phù hợp với dữ liệu có tính quy luật.
 
-🚀 Thuật toán chia dữ liệu thành K cụm sao cho khoảng cách trong cụm là nhỏ nhất.
+#### 🧠 N-BEATS
+- Deep learning không dùng RNN, CNN, Attention.
+- Dự báo mạnh cả chuỗi có cấu trúc lẫn không cấu trúc.
 
-📍 Dễ triển khai, chạy nhanh với dữ liệu lớn.
+---
 
-🔍 Có thể phân tích chủ đề chính của từng cụm bằng cách xem các từ có trọng số cao nhất.
-# 2.Dự báo xu hướng
-## 2.1 DLinear
- DLinear (Decomposition-Linear)
-🔍 Tách chuỗi đầu vào thành phần xu hướng và thành phần mùa vụ (series decomposition).
+## 🧪 Thực nghiệm
 
-➕ Mỗi thành phần được dự báo riêng bằng mô hình tuyến tính đơn giản.
+### 🔹 Phân cụm chủ đề với KMeans
+Dữ liệu được chia thành 10 cụm chủ đề, ví dụ:
 
-⚡ Siêu nhẹ, tốc độ cực nhanh, phù hợp với ứng dụng thực tế thời gian thực.
+| Cụm | Chủ đề gán nhãn |
+|-----|------------------|
+| 0   | Du lịch & Tài nguyên Thiên nhiên |
+| 1   | An ninh & Hệ thống Tư pháp |
+| 2   | Y tế & Luật pháp |
+| 3   | Giáo dục & Giao thông công cộng |
+| 4   | Khai khoáng, Hạ tầng & Tài nguyên |
+| 5   | Khủng hoảng & Tài nguyên quý |
+| 6   | Chính trị & Giáo dục |
+| 7   | Kinh tế & Phát triển Du lịch |
+| 8   | Công lý & Quản trị công |
+| 9   | Tội phạm & Ma túy |
 
-🔄 Ổn định khi dữ liệu có tính quy luật rõ ràng (trend, seasonality).
+📌 (Bạn có thể đổi tên các cụm trước ngày 24/06/2025)
 
-📉 Có thể hoạt động tốt hơn các mô hình phức tạp khi chuỗi "ít nhiễu".
+### 🔹 Đánh giá mô hình dự báo
 
-## 2.2 N-Beast
+| Mô hình   | MSE   | RMSE  |
+|-----------|-------|--------|
+| DLinear   | ≈ 0.612 | ≈ 0.679 |
+| N-BEATS   | ≈ 0.509 | ≈ 0.703 |
 
-N-BEATS (Neural Basis Expansion Analysis for Time Series)
-🧱 Kiến trúc deep learning không dùng RNN/CNN/Attention, chỉ dùng MLP + Residual Blocks.
+---
 
-🔁 Dự báo theo kiểu backward + forward block: học biểu diễn cho cả đầu vào và đầu ra.
+## 🖥️ Giao diện ứng dụng
 
-🧠 Mỗi block học các thành phần dự báo (trend, seasonality, residual).
+📍 Triển khai tại: [Hugging Face Space](https://huggingface.co/spaces/tungdzvcl123/DEMO)
 
-📈 Linh hoạt cao, hoạt động tốt trên cả chuỗi có cấu trúc và phi cấu trúc.
+### Chức năng:
+- **Tab 1**: Tải file CSV (gồm: `DATE`, `THEMES`, `SOURCEURLS`)
+- **Tab 2**:
+  - Nhập ngày `cutoff` (vd: `2025-05-20`)
+  - Dự đoán Top 3 chủ đề hot sau ngày đó
 
-🧪 Một trong các mô hình có hiệu năng rất cao trên benchmark M4, M5.
-________________________________________________________________________________________________________________________________________________________
+---
 
-# Thực nghiệm và đánh giá
+## 🗂️ Cấu trúc file
 
-## Về phần phân tích xu hướng:
-
-TF-IDF đã giúp trích xuất các chủ để để giúp kmeans tiến hành phân cụm và thể đưa các dữ liệu vào các cụm phù hợp với nó
-ta đã tiến hành đưa dữ liệu vào 10 cụm bao gồm:
-Cụm	 Chủ đề gán nhãn
-0	   Du lịch & Tài nguyên Thiên nhiên
-1	   An ninh & Hệ thống Tư pháp
-2 	  Y tế & Luật pháp
-3	   Giáo dục & Giao thông công cộng
-4 	  Khai khoáng, Hạ tầng & Tài nguyên
-5	   Khủng hoảng & Tài nguyên quý
-6	   Chính trị & Giáo dục
-7	   Kinh tế & Phát triển Du lịch
-8  	 Công lý & Quản trị công
-9	   Tội phạm & Ma túy ( có thể chỉnh sửa tên cụm vào trước ngày 24/06/2025)
-## Về phần dự báo xu hướng
-
-DLinear(Test loss: 0,0951, MSE ≈ 0.6125,RMSE ≈ 0.6797)
-N-BEAST(MSE ≈ 0.509,RMSE ≈ 0.703).Các mô hình có sai số tương đối nhỏ
-__________________________________________________________________________________________________________________________________________________
-
-# Giao diện ứng dụng
-
-Triển khai giao diện tại:https://huggingface.co/spaces/tungdzvcl123/DEMO
-Các chức năng chính của ứng dụng:
-Tab 1: Tạo giao diện có thể upload file csv( hiện tải chỉ hỗ trợ tải 3 cột dữ liệu Date( đã được chuẩn hóa),THEMES,SOURCEURLS)
-có thể dùng file csv có sẵn trong github để chạy thử demo
-Tab 2: 
- Ngày cutoff (yyyy-mm-dd):
-▸ Người dùng nhập ngày để mô hình dự đoán các chủ đề hot ngay sau ngày này (dựa vào dữ liệu trước đó).
-▸ Ví dụ: nếu nhập 2025-05-20, mô hình sẽ dự đoán các chủ đề nổi bật nhất trong những ngày tiếp theo.
-
-Top 3 chủ đề (khung kết quả):
-▸ Hiển thị danh sách 3 chủ đề được mô hình dự đoán là sẽ “hot” nhất sau ngày cutoff.
-▸ Kết quả thường là tên chủ đề hoặc nhãn đã gán (ví dụ: "Tội phạm & Ma túy", "Y tế & Luật pháp"...).
-Nút hành động:
-▸ Dự đoán top 3 chủ đề hot nhất — khi bấm sẽ chạy mô hình và cập nhật kết quả phía trên.
-_____________________________________________________________________________________________________________________________________________________
-
-# Cấu trúc file
-
-
-
-___________________________________________________________________________________________________________________________________________________
-
-# Cách cài đặt về chạy local:
-
-git clone https://github.com/tungdzvcl123/du_doan_chu_de_hot.git
-cd du_doan_chu_de_hot
-pip install -r requirements.txt
-
-# Cách để cải thiện dự án:
-
-Dự án của bọn em vẫn còn khá nhiều lỗi , các mô hình vẫn chưa đưa ra được các dự báo có tỉ lệ chính xác cao và phân tích xu hương vẫn chỉ dựa tren top 10 từ khóa hot nhất
-tuy nhiên bọn em sẽ cố gắng cải thiện các tham số cũng như test thêm các mô hình để có thể đưa ra được những pháp án tốt hơn cho dự án
-Thực hiện dự án:
-Nguyễn Lâm Tùng
-Nguyễn Quang Linh
-Hà Đức Hưng
