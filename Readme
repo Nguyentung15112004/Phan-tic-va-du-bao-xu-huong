@@ -1,5 +1,5 @@
-#Chủ đề btl: Phân tích và dự báo các chủ đề trên mạng xã hôi/ tin tức
-#Mô tả bài toán:
+# Chủ đề btl: Phân tích và dự báo các chủ đề trên mạng xã hôi/ tin tức
+# Mô tả bài toán:
 Trong thời đại công nghệ số và chuyển đổi số phức tạp như ngày nay, việc làm chủ được các phương pháp phân tích cũng như dự báo các chủ để trên mạng xã hội va tin tức 
 là 1 điều rất quan trọng bởi với việc phát hiện những topic, chủ dể hot trong 1 khoảng thời gian sớm giúp chúng ta có thể chủ động phòng ngừa và đưa ra những giải pháp
 cho các chủ để nóng đó
@@ -11,9 +11,9 @@ Bộ dữ liệu gôm 11 thuộc tính bao gồm: DATE,NUMARTS,COUNTS,THEMES,LOC
 
 
 _______________________________________________________________________________________________________________________________________________________
-#các Mô hình và phương pháp được triển khai cho bài toán
-#1.Phân tích xu hướng (TF-iDF+Kmeans)
-#1.1 TF-IDF
+# Các Mô hình và phương pháp được triển khai cho bài toán
+# 1.Phân tích xu hướng (TF-iDF+Kmeans)
+## 1.1 TF-IDF
  TF-IDF (Term Frequency - Inverse Document Frequency)
 📊 Biến văn bản thành vector số theo tần suất xuất hiện từ ngữ.
 
@@ -22,7 +22,7 @@ ________________________________________________________________________________
 💡 Phù hợp cho các bài toán phân cụm hoặc phân loại văn bản.
 
 ⚙️ Đầu ra là ma trận thưa (sparse matrix), dùng làm đầu vào cho các mô hình học máy.
-#1.2 Kmeans
+## 1.2 Kmeans
  KMeans Clustering
 📎 Nhóm các văn bản lại thành các cụm chủ đề dựa trên đặc trưng TF-IDF.
 
@@ -31,8 +31,8 @@ ________________________________________________________________________________
 📍 Dễ triển khai, chạy nhanh với dữ liệu lớn.
 
 🔍 Có thể phân tích chủ đề chính của từng cụm bằng cách xem các từ có trọng số cao nhất.
-#2.Dự báo xu hướng
-2.1 DLinear
+# 2.Dự báo xu hướng
+## 2.1 DLinear
  DLinear (Decomposition-Linear)
 🔍 Tách chuỗi đầu vào thành phần xu hướng và thành phần mùa vụ (series decomposition).
 
@@ -44,7 +44,7 @@ ________________________________________________________________________________
 
 📉 Có thể hoạt động tốt hơn các mô hình phức tạp khi chuỗi "ít nhiễu".
 
-2.2 N-Beast
+## 2.2 N-Beast
 N-BEATS (Neural Basis Expansion Analysis for Time Series)
 🧱 Kiến trúc deep learning không dùng RNN/CNN/Attention, chỉ dùng MLP + Residual Blocks.
 
@@ -56,8 +56,8 @@ N-BEATS (Neural Basis Expansion Analysis for Time Series)
 
 🧪 Một trong các mô hình có hiệu năng rất cao trên benchmark M4, M5.
 ________________________________________________________________________________________________________________________________________________________
-Thực nghiệm và đánh giá
-#Về phần phân tích xu hướng:
+# Thực nghiệm và đánh giá
+## Về phần phân tích xu hướng:
 TF-IDF đã giúp trích xuất các chủ để để giúp kmeans tiến hành phân cụm và thể đưa các dữ liệu vào các cụm phù hợp với nó
 ta đã tiến hành đưa dữ liệu vào 10 cụm bao gồm:
 Cụm	 Chủ đề gán nhãn
@@ -71,11 +71,11 @@ Cụm	 Chủ đề gán nhãn
 7	   Kinh tế & Phát triển Du lịch
 8  	 Công lý & Quản trị công
 9	   Tội phạm & Ma túy ( có thể chỉnh sửa tên cụm vào trước ngày 24/06/2025)
-# Về phần dự báo xu hướng
+## Về phần dự báo xu hướng
 DLinear(Test loss: 0,0951, MSE ≈ 0.6125,RMSE ≈ 0.6797)
 N-BEAST(MSE ≈ 0.509,RMSE ≈ 0.703).Các mô hình có sai số tương đối nhỏ
 __________________________________________________________________________________________________________________________________________________
-#Giao diện ứng dụng
+# Giao diện ứng dụng
 Triển khai giao diện tại:https://huggingface.co/spaces/tungdzvcl123/DEMO
 Các chức năng chính của ứng dụng:
 Tab 1: Tạo giao diện có thể upload file csv( hiện tải chỉ hỗ trợ tải 3 cột dữ liệu Date( đã được chuẩn hóa),THEMES,SOURCEURLS)
@@ -91,12 +91,12 @@ Top 3 chủ đề (khung kết quả):
 Nút hành động:
 ▸ Dự đoán top 3 chủ đề hot nhất — khi bấm sẽ chạy mô hình và cập nhật kết quả phía trên.
 _____________________________________________________________________________________________________________________________________________________
-Cấu trúc file
+# Cấu trúc file
 
 
 
 ___________________________________________________________________________________________________________________________________________________
-#Cách cài đặt về chạy local:
+# Cách cài đặt về chạy local:
 git clone https://github.com/tungdzvcl123/du_doan_chu_de_hot.git
 cd du_doan_chu_de_hot
 pip install -r requirements.txt
